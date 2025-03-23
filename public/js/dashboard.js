@@ -20,15 +20,19 @@ document.getElementById('get-data').addEventListener('click', async () => {
     
     const data = await response.json();
     
+    // Show result div and add visible class
+    resultDiv.classList.add('visible');
+    
     if (response.ok) {
-      resultDiv.className = 'result success';
+      resultDiv.className = 'result visible success';
       resultDiv.innerText = JSON.stringify(data, null, 2);
     } else {
-      resultDiv.className = 'result error';
+      resultDiv.className = 'result visible error';
       resultDiv.innerText = data.message;
     }
   } catch (error) {
-    resultDiv.className = 'result error';
+    resultDiv.classList.add('visible');
+    resultDiv.className = 'result visible error';
     resultDiv.innerText = 'Ошибка получения данных';
   } finally {
     button.classList.remove('loading');

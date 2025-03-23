@@ -19,8 +19,11 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
       
       const data = await response.json();
       
+      // Show result div
+      resultDiv.classList.add('visible');
+      
       if (response.ok) {
-        resultDiv.className = 'result success';
+        resultDiv.className = 'result visible success';
         resultDiv.innerText = 'Регистрация успешна! Перенаправление...';
         
         // Add fade out animation
@@ -31,11 +34,12 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
           window.location.href = 'login.html';
         }, 1500);
       } else {
-        resultDiv.className = 'result error';
+        resultDiv.className = 'result visible error';
         resultDiv.innerText = data.message;
       }
     } catch (error) {
-      resultDiv.className = 'result error';
+      resultDiv.classList.add('visible');
+      resultDiv.className = 'result visible error';
       resultDiv.innerText = 'Ошибка регистрации. Попробуйте позже.';
     } finally {
       button.classList.remove('loading');

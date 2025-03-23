@@ -19,8 +19,11 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
       
       const data = await response.json();
       
+      // Show result div
+      resultDiv.classList.add('visible');
+      
       if (data.token) {
-        resultDiv.className = 'result success';
+        resultDiv.className = 'result visible success';
         resultDiv.innerText = 'Успешный вход! Перенаправление...';
         localStorage.setItem('token', data.token);
         
@@ -32,11 +35,12 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
           window.location.href = 'dashboard.html';
         }, 1000);
       } else {
-        resultDiv.className = 'result error';
+        resultDiv.className = 'result visible error';
         resultDiv.innerText = data.message;
       }
     } catch (error) {
-      resultDiv.className = 'result error';
+      resultDiv.classList.add('visible');
+      resultDiv.className = 'result visible error';
       resultDiv.innerText = 'Ошибка входа. Попробуйте позже.';
     } finally {
       button.classList.remove('loading');
