@@ -69,4 +69,5 @@ app.get('/protected', authenticateToken, (req, res) => {
 // Запуск сервера
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту ${PORT}`);
+  console.log(`Начните использование сервиса на странице http://localhost:3000/register.html`)
 });
