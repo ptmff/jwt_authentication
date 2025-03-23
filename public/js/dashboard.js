@@ -1,26 +1,51 @@
-// Если токена нет, перенаправляем на страницу входа
+// Check for token and redirect if not found
 const token = localStorage.getItem('token');
 if (!token) {
   window.location.href = 'login.html';
 }
 
 document.getElementById('get-data').addEventListener('click', async () => {
+  const button = document.getElementById('get-data');
   const resultDiv = document.getElementById('result');
+  
+  // Add loading state
+  button.classList.add('loading');
+  button.disabled = true;
+  
   try {
     const response = await fetch('/protected', {
       method: 'GET',
       headers: { 'Authorization': 'Bearer ' + token }
     });
+    
     const data = await response.json();
-    resultDiv.innerText = JSON.stringify(data, null, 2);
+    
+    if (response.ok) {
+      resultDiv.className = 'result success';
+      resultDiv.innerText = JSON.stringify(data, null, 2);
+    } else {
+      resultDiv.className = 'result error';
+      resultDiv.innerText = data.message;
+    }
   } catch (error) {
+    resultDiv.className = 'result error';
     resultDiv.innerText = 'Ошибка получения данных';
+  } finally {
+    button.classList.remove('loading');
+    button.disabled = false;
   }
 });
 
-// Обработка выхода: удаляем токен и перенаправляем на страницу входа
+// Handle logout with animation
 document.getElementById('logout').addEventListener('click', (e) => {
   e.preventDefault();
-  localStorage.removeItem('token');
-  window.location.href = 'login.html';
+  
+  // Add fade out animation
+  document.querySelector('.container').style.opacity = '0';
+  document.querySelector('.container').style.transform = 'scale(0.95)';
+  
+  setTimeout(() => {
+    localStorage.removeItem('token');
+    window.location.href = 'login.html';
+  }, 300);
 });

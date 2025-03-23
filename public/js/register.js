@@ -1,8 +1,14 @@
 document.getElementById('register-form').addEventListener('submit', async (e) => {
     e.preventDefault();
+    const button = e.target.querySelector('button');
+    const resultDiv = document.getElementById('result');
+    
+    // Add loading state
+    button.classList.add('loading');
+    button.disabled = true;
+    
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value.trim();
-    const resultDiv = document.getElementById('result');
   
     try {
       const response = await fetch('/register', {
@@ -10,14 +16,29 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
       });
+      
       const data = await response.json();
-      resultDiv.innerText = data.message;
+      
       if (response.ok) {
-        // После успешной регистрации можно редиректить на страницу входа
-        setTimeout(() => window.location.href = 'login.html', 1500);
+        resultDiv.className = 'result success';
+        resultDiv.innerText = 'Регистрация успешна! Перенаправление...';
+        
+        // Add fade out animation
+        document.querySelector('.container').style.opacity = '0';
+        document.querySelector('.container').style.transform = 'scale(0.95)';
+        
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 1500);
+      } else {
+        resultDiv.className = 'result error';
+        resultDiv.innerText = data.message;
       }
     } catch (error) {
-      resultDiv.innerText = 'Ошибка регистрации';
+      resultDiv.className = 'result error';
+      resultDiv.innerText = 'Ошибка регистрации. Попробуйте позже.';
+    } finally {
+      button.classList.remove('loading');
+      button.disabled = false;
     }
   });
-  

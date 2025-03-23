@@ -2,20 +2,24 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Регистрация</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Регистрация | Современная панель</title>
   <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
-    <h1>Регистрация</h1>
+  <div class="container glass">
+    <h1>Создать аккаунт</h1>
     <form id="register-form">
-      <input type="text" id="username" placeholder="Имя пользователя" required>
-      <input type="password" id="password" placeholder="Пароль" required>
-      <button type="submit">Зарегистрироваться</button>
+      <input type="text" id="username" placeholder="Придумайте имя пользователя" required autocomplete="username">
+      <input type="password" id="password" placeholder="Придумайте надёжный пароль" required autocomplete="new-password">
+      <button type="submit">
+        <span>Зарегистрироваться</span>
+      </button>
     </form>
     <div id="result" class="result"></div>
     <div class="nav">
-      Уже зарегистрированы? <a href="login.html">Войти</a>
+      Уже есть аккаунт? <a href="login.html">Войти</a>
     </div>
   </div>
   <script src="js/register.js"></script>
